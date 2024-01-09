@@ -1,0 +1,21 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import H1 from "~/components/H1.astro";
+import Main from "~/layouts/Main.astro";
+import ContactForm from "~/components/ContactForm.svelte";
+---
+
+<BaseLayout
+  title="Contact - Rhythm Nation"
+  description="Contact us"
+  image="/images/drums.jpg"
+>
+  <Main>
+    <H1 text="Contact" />
+    <div class="mb-20">
+      <ContactForm client:load />
+    </div>
+  </Main>
+</BaseLayout>
+
+<script></script>
