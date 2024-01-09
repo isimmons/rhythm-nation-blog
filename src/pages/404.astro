@@ -1,0 +1,16 @@
+---
+import H1 from "~/components/H1.astro";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Main from "~/layouts/Main.astro";
+---
+
+<BaseLayout title="Not Found">
+  <Main>
+    <div
+      class="flex flex-col gap-2 w-1/2 mx-auto items-center mt-24 bg-teal-900 py-24 rounded-md text-teal-200"
+    >
+      <H1 text="404" classes="text-teal-200" />
+      <p class="pt-12 text-2xl">Not the page you're looking for</p>
+    </div>
+  </Main>
+</BaseLayout>
