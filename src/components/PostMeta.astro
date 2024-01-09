@@ -1,0 +1,40 @@
+---
+import { Image } from "astro:assets";
+import { getEntryBySlug, type CollectionEntry } from "astro:content";
+
+type Props = {
+  post: CollectionEntry<"posts">;
+};
+
+const { post } = Astro.props;
+const author = await getEntryBySlug("authors", post.data.author);
+---
+
+<div class="flex justify-between items-center mb-10">
+  <div class="flex items-center gap-x-2">
+    {
+      author ? (
+        <>
+          <a href={`/authors/${author.slug}`}>
+            <Image
+              src={author.data.image}
+              alt={`Link to author ${author.data.name}`}
+              width={48}
+              height={48}
+              format="webp"
+              class="rounded-full border-2 border-teal-500 aspect-square object-cover size-12"
+            />
+          </a>
+          <a
+            href={`/authors/${author.slug}`}
+            class="text-zinc-600 text-2xl font-bold"
+          >
+            {author.data.name}
+          </a>
+        </>
+      ) : (
+        <a href="#">Report missing author</a>
+      )
+    }
+  </div>
+</div>

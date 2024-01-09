@@ -1,0 +1,14 @@
+---
+import type { PostCategories } from "~/schemas/postsSchema";
+type Props = {
+  category: PostCategories;
+};
+
+const { category } = Astro.props;
+---
+
+<a
+  href={`/categories/${category}`}
+  class="text-teal-900 text-xl uppercase rounded-3xl border-2 border-teal-900 whitespace-nowrap px-3"
+  >{category}</a
+>

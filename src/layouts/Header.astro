@@ -1,0 +1,41 @@
+---
+import { Image } from "astro:assets";
+import heartbeat from "~/content/posts/images/heartbeat.png";
+
+const userEmail = Astro.cookies.get("userId");
+const isAuthenticated = userEmail?.value !== undefined;
+---
+
+<header
+  class="flex justify-between items-center p-24 py-12 max-sm:px-5 max-sm:p-10 max-w-7xl w-full mx-auto"
+>
+  <a href="/" class="flex items-center gap-x-4 w-fit">
+    <Image
+      src={heartbeat}
+      alt="rhythm nation logo"
+      width={64}
+      height={64}
+      format="webp"
+      class="w-16"
+    />
+    <p class="uppercase text-3xl text-zinc-900">blog</p>
+  </a>
+
+  {
+    isAuthenticated ? (
+      <a
+        href="/logout"
+        class="bg-teal-900 text-white py-2 px-6 rounded-xl text-xl"
+      >
+        Logout
+      </a>
+    ) : (
+      <a
+        href="/login"
+        class="bg-teal-900 text-white py-2 px-6 rounded-xl text-xl"
+      >
+        Login
+      </a>
+    )
+  }
+</header>

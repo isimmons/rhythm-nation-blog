@@ -1,16 +1,45 @@
 ---
+import { getCollection } from "astro:content";
+import CategoryList from "~/components/CategoryList.astro";
+import FeaturedPost from "~/components/FeaturedPost.astro";
+import H1 from "~/components/H1.astro";
+import Main from "~/layouts/Main.astro";
+import PostsList from "~/components/PostsList.astro";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { getCategoriesFromPosts } from "~/utils";
 
+const allPosts = await getCollection("posts");
+
+const recentPosts = allPosts.filter((p) => !p.data.featured).slice(0, 4);
+const featuredPosts = allPosts.filter((p) => p.data.featured);
+const categories = getCategoriesFromPosts(recentPosts);
+
+// playing with some ideas, see signup page where this session is set
+// const cookie = Astro.cookies.get("rhythm_session");
+// if (cookie) console.log(atob(cookie.value));
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Blog - Rhythm Nation"
+  description="Read and learn from music producers and enthusiasts"
+>
+  <Main>
+    <H1 text="Rhythm Nation Blog" />
+    <p class="text-zinc-900 text-2xl mb-24 max-sm:mb-14">
+      Join the community and learn from Music Producers and Enthusiasts
+    </p>
+    {featuredPosts.map((p) => <FeaturedPost post={p} />)}
+    <hr class="w-full border border-teal-900 mb-16 max-sm:mb-10" />
+    <CategoryList categories={categories} title="Recent Posts" />
+    <div class="mb-32">
+      <PostsList posts={recentPosts} />
+    </div>
+    <div class="flex justify-end mb-60 max-sm:mb-36">
+      <a
+        href="/blog"
+        class="bg-teal-900 text-white py-3 px-6 rounded-xl text-xl"
+        >Read More Posts</a
+      >
+    </div>
+  </Main>
+</BaseLayout>

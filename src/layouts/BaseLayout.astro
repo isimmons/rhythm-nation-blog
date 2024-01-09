@@ -1,0 +1,59 @@
+---
+import Footer from "./Footer.astro";
+import Header from "./Header.astro";
+import "@fontsource/cabin";
+import { getThumbnail } from "~/utils/cloudinary";
+
+interface Props {
+  title: string;
+  description?: string | undefined;
+  image?: string;
+}
+
+const {
+  title,
+  description = "A community of music producers and enthusiasts",
+  image = getThumbnail("A community of music producers and enthusiasts"),
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <link
+      data-rh="true"
+      rel="alternate"
+      type="application/rss+xml"
+      title="RSS"
+      href={`${Astro.url}rss.xml`}
+    />
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <!-- open graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:alt" content={description} />
+
+    <!-- twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@isimmons33" />
+    <meta name="twitter:creator" content="@isimmons33" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={image} />
+    <meta property="twitter:image:alt" content={description} />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen grid grid-rows-[auto,1fr,auto] w-full">
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>
