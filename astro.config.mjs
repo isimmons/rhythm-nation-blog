@@ -7,7 +7,7 @@ import svelte from "@astrojs/svelte";
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), svelte()],
-  site: "https://rythm-nation-blog.vercel.app/",
+  site: "https://rythm-nation-blog.vercel.app",
   output: "server",
   adapter: vercel({
     imageService: true,
