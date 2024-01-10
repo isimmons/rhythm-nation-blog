@@ -2,6 +2,6 @@
 import { XataClient } from "~/xata.ts";
 
 export const xata = new XataClient({
-  apiKey: import.meta.env.XATA_API_KEY,
-  branch: import.meta.env.XATA_BRANCH,
+  apiKey: import.meta.env.XATA_API_KEY as string,
+  branch: import.meta.env.XATA_BRANCH as string,
 });
