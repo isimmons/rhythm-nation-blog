@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
-import vercel from "@astrojs/vercel/serverless";
+import vercelServerless from "@astrojs/vercel/serverless";
 import svelte from "@astrojs/svelte";
 import sitemap from "@astrojs/sitemap";
 import sentry from "@sentry/astro";
@@ -27,7 +27,7 @@ export default defineConfig({
   ],
   site: "https://rythm-nation-blog.vercel.app",
   output: "server",
-  adapter: vercel({
+  adapter: vercelServerless({
     imageService: true,
   }),
 });
