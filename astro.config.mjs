@@ -17,6 +17,7 @@ export default defineConfig({
         org: import.meta.env.SENTRY_ORGANIZATION,
         project: "rhythm-nation-blog",
         authToken: import.meta.env.SENTRY_AUTH_TOKEN,
+        telemetry: false,
       },
     }),
   ],
