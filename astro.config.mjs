@@ -18,6 +18,7 @@ export default defineConfig({
       sourceMapsUploadOptions: {
         project: "rhythm-nation-blog",
         authToken: process.env.SENTRY_AUTH_TOKEN,
+        telemetry: false,
       },
     }),
   ],
