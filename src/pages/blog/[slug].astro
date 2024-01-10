@@ -18,7 +18,6 @@ import { getReactionsDetailsByPost } from "~/utils/emoji";
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/404");
 const user = Astro.cookies.get("userId");
-if (!user?.value) return Astro.redirect("/login");
 
 if (Astro.request.method === "POST") {
   // VALIDATE WITH ZOD!
@@ -28,7 +27,7 @@ if (Astro.request.method === "POST") {
   await xata.db.comments.create({
     post: slug,
     text: comment,
-    user: user.value,
+    user: user?.value,
   });
 
   return Astro.redirect(`/blog/${slug}`);
@@ -45,7 +44,10 @@ const comments = await xata.db.comments
 const { title, cover, description } = post.data;
 const { Content, headings } = await post.render();
 const coverImageSrc = (await getImage({ src: cover })).src;
-const reactionsDetails = await getReactionsDetailsByPost(post.slug, user.value);
+const reactionsDetails = await getReactionsDetailsByPost(
+  post.slug,
+  user?.value
+);
 ---
 
 <BaseLayout title={title} image={coverImageSrc} description={description}>
