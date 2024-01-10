@@ -19,7 +19,7 @@
     "@cloudinary/url-gen": "^1.14.0",
     "@fontsource/cabin": "^5.0.16",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
-    "@sentry/astro": "^7.92.0",
+    "@sentry/astro": "^7.93.0",
     "@spotlightjs/astro": "^1.0.9",
     "@types/bcryptjs": "^2.4.6",
     "@types/markdown-it": "^13.0.7",
