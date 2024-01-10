@@ -10,22 +10,22 @@ import spotlightjs from "@spotlightjs/astro";
 // https://astro.build/config
 export default defineConfig({
   integrations: [
+    tailwind(),
+    icon(),
+    svelte(),
+    sitemap(),
     sentry({
       dsn: "https://6b3d9cf217f575ee9ca356327415e129@o1078821.ingest.sentry.io/4506544480124928",
       sourceMapsUploadOptions: {
         project: "rhythm-nation-blog",
-        authToken: process.env.SENTRY_AUTH_TOKEN,
+        authToken: import.meta.env.SENTRY_AUTH_TOKEN,
         telemetry: false,
       },
     }),
     ,
     spotlightjs(),
-    tailwind(),
-    icon(),
-    svelte(),
-    sitemap(),
   ],
-  site: "https://rythm-nation-blog.vercel.app",
+  site: "https://rhythm-nation-blog.vercel.app",
   output: "server",
   adapter: vercelServerless({
     imageService: true,
