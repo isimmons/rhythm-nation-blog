@@ -40,6 +40,9 @@ const categories = getCategoriesFromPosts(recentPosts);
         class="bg-teal-900 text-white py-3 px-6 rounded-xl text-xl"
         >Read More Posts</a
       >
+      <button onclick="throw new Error('This is a test error')">
+        Throw test error
+      </button>
     </div>
   </Main>
 </BaseLayout>
