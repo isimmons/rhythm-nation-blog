@@ -13,14 +13,14 @@ export default defineConfig({
     icon(),
     svelte(),
     sitemap(),
-    sentry({
-      dsn: "https://6b3d9cf217f575ee9ca356327415e129@o1078821.ingest.sentry.io/4506544480124928",
-      sourceMapsUploadOptions: {
-        project: "rhythm-nation-blog",
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        telemetry: false,
-      },
-    }),
+    // sentry({
+    //   dsn: "https://6b3d9cf217f575ee9ca356327415e129@o1078821.ingest.sentry.io/4506544480124928",
+    //   sourceMapsUploadOptions: {
+    //     project: "rhythm-nation-blog",
+    //     authToken: process.env.SENTRY_AUTH_TOKEN,
+    //     telemetry: false,
+    //   },
+    // }),
   ],
   site: "https://rythm-nation-blog.vercel.app",
   output: "server",
