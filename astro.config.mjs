@@ -14,10 +14,8 @@ export default defineConfig({
     sentry({
       dsn: "https://6b3d9cf217f575ee9ca356327415e129@o1078821.ingest.sentry.io/4506544480124928",
       sourceMapsUploadOptions: {
-        org: import.meta.env.SENTRY_ORGANIZATION,
         project: "rhythm-nation-blog",
-        authToken: import.meta.env.SENTRY_AUTH_TOKEN,
-        telemetry: false,
+        authToken: process.env.SENTRY_AUTH_TOKEN,
       },
     }),
   ],
