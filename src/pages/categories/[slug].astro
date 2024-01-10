@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import type { PostCategories } from "~/schemas/postsSchema";
+import CategoryList from "~/components/CategoryList.astro";
+import H1 from "~/components/H1.astro";
+import Main from "~/layouts/Main.astro";
+import PaginationLinks from "~/components/PaginationLinks.astro";
+import PostsList from "~/components/PostsList.astro";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+
+const page = Number(Astro.url.searchParams.get("page")) || 1;
+
+const postsPerPage = Number(import.meta.env.POSTS_PER_PAGE);
+const start = postsPerPage * (page - 1);
+const end = start + postsPerPage;
+
+const category = Astro.params.slug as PostCategories;
+
+const allPosts = await getCollection("posts");
+const postsByCategory = allPosts.filter((post) =>
+  post.data.categories.includes(category)
+);
+const posts = postsByCategory.slice(start, end);
+if (posts.length < 1) return Astro.redirect("/404");
+---
+
+<BaseLayout
+  title="Blog - Rhythm Nation"
+  description="Read and learn from music producers and enthusiasts"
+  image="images/drums.jpg"
+>
+  <Main>
+    <a href="/blog" class="text-zinc-500 text-2xl">
+      <Icon name="arrow-left" class="size-5 inline mr-2" />
+      Back to all posts
+    </a>
+    <H1 text="Rhythm Nation Blog" />
+    <p class="text-zinc-900 text-2xl mb-24 max-sm:mb-14">
+      Join the community and learn from Music Producers and Enthusiasts
+    </p>
+    <CategoryList categories={[category]} title="Posts Tagged" />
+
+    <div class="mb-12">
+      <PaginationLinks page={page} numberOfPosts={postsByCategory.length} />
+    </div>
+    <PostsList posts={posts} />
+    <div class="mb-24">
+      <PaginationLinks page={page} numberOfPosts={postsByCategory.length} />
+    </div>
+  </Main>
+</BaseLayout>
