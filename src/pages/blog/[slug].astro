@@ -1,0 +1,104 @@
+---
+import { getEntryBySlug } from "astro:content";
+import Main from "~/layouts/Main.astro";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import H1 from "~/components/H1.astro";
+import { Image, getImage } from "astro:assets";
+import TableOfContents from "~/components/TableOfContents.astro";
+import SocialShare from "~/components/SocialShare.astro";
+import PostMeta from "~/components/PostMeta.astro";
+import CommentForm from "~/components/CommentForm.astro";
+import { xata } from "~/utils/xata";
+import CommentsList from "~/components/CommentsList.astro";
+import EmojiReactions from "~/components/EmojiReactions.svelte";
+
+import { getReactionsDetailsByPost } from "~/utils/emoji";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/404");
+const user = Astro.cookies.get("userId");
+if (!user?.value) return Astro.redirect("/login");
+
+if (Astro.request.method === "POST") {
+  // VALIDATE WITH ZOD!
+  const data = await Astro.request.formData();
+  const comment = data.get("comment") as string;
+
+  await xata.db.comments.create({
+    post: slug,
+    text: comment,
+    user: user.value,
+  });
+
+  return Astro.redirect(`/blog/${slug}`);
+}
+
+const post = await getEntryBySlug("posts", slug);
+if (!post) return Astro.redirect("/404");
+
+const comments = await xata.db.comments
+  .select(["id", "text", "date", "user.name"])
+  .filter({ post: post.slug })
+  .getMany();
+
+const { title, cover, description } = post.data;
+const { Content, headings } = await post.render();
+const coverImageSrc = (await getImage({ src: cover })).src;
+const reactionsDetails = await getReactionsDetailsByPost(post.slug, user.value);
+---
+
+<BaseLayout title={title} image={coverImageSrc} description={description}>
+  <Main>
+    <a id="top" href="#top" class="text-xs text-transparent">Top Anchor</a>
+    <div class="border-b-4 border-zinc-500 w-fit mb-16">
+      <a href="/blog" class="text-zinc-500 text-2xl">
+        <Icon name="arrow-left" class="size-5 inline mr-2" />
+        Back to all posts
+      </a>
+    </div>
+    <H1 text={title} />
+    <PostMeta post={post} />
+    <Image
+      src={cover}
+      alt={title}
+      height={1024}
+      width={1024}
+      format="webp"
+      class="rounded-2xl shadow-xl mb-28 aspect-thumbnail object-cover"
+    />
+    <div class="mb-10">
+      <TableOfContents headings={headings} />
+    </div>
+    <div class="relative">
+      <SocialShare post={post} />
+      <div class="prose prose-2xl overflow-visible relative mb-10">
+        <Content />
+      </div>
+    </div>
+
+    <EmojiReactions client:visible post={post.slug} {reactionsDetails} />
+    <div class="mt-10">
+      <a href="#top" class="text-zinc-500 underline">Back to Top</a>
+    </div>
+  </Main>
+  <div
+    class="bg-teal-100/30 py-14 px-24 relative border-b border-teal-900 mt-32"
+  >
+    <div class="max-w-7xl mx-auto">
+      <div id="comments" class="mb-5">
+        <h2>
+          <span class="font-bold text-teal-900 text-4xl mr-8">Comments</span>
+          <span
+            class="border border-teal-900 text-teal-900 rounded-full px-4 py-2 font-bold text-2xl"
+            >{comments.length}</span
+          >
+        </h2>
+      </div>
+    </div>
+    <div class="mb-14">
+      <CommentForm postSlug={slug} />
+    </div>
+    <CommentsList comments={comments} />
+  </div>
+</BaseLayout>

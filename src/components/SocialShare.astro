@@ -1,0 +1,32 @@
+---
+import { Icon } from "astro-icon/components";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  post: CollectionEntry<"posts">;
+};
+
+const { post } = Astro.props;
+---
+
+<div class="flex flex-col gap-y-9 absolute top-2 -left-20">
+  <a
+    href={`https://twitter.com/intent/tweet?url=https://rhythm.nation/blog/${post.slug}`}
+  >
+    <span class="hidden assistive-text">Share post on Twitter</span>
+    <Icon
+      name="twitter"
+      class="text-zinc-600 size-8"
+    />
+  </a>
+
+  <a
+    href={`https://www.linkedin.com/sharing/share-offsite/?url=https://rhythm.nation/blog/${post.slug}`}
+  >
+    <span class="hidden assistive-text">Share post on Linkedin</span>
+    <Icon
+      name="linkedin"
+      class="text-zinc-600 size-8"
+    />
+  </a>
+</div>
