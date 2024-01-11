@@ -31,6 +31,6 @@ export default defineConfig({
   site: "https://rhythm-nation-blog.vercel.app",
   output: "server",
   adapter: vercelServerless({
-    imageService: true,
+    //imageService: true,
   }),
 });
