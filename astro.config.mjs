@@ -1,7 +1,8 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
-import vercelServerless from "@astrojs/vercel/serverless";
+// import vercelServerless from "@astrojs/vercel/serverless";
+import netlify from "@astrojs/netlify";
 import svelte from "@astrojs/svelte";
 import sitemap from "@astrojs/sitemap";
 import sentry from "@sentry/astro";
@@ -30,7 +31,5 @@ export default defineConfig({
       : [...integrations, ...devOnlyIntegrations],
   site: "https://rhythm-nation-blog.vercel.app",
   output: "server",
-  adapter: vercelServerless({
-    //imageService: true,
-  }),
+  adapter: netlify(),
 });
