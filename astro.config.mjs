@@ -25,11 +25,9 @@ const integrations = [tailwind(), icon(), svelte(), sitemap()];
 
 // https://astro.build/config
 export default defineConfig({
-  integrations:
-    import.meta.env.MODE === "production"
-      ? integrations
-      : [...integrations, ...devOnlyIntegrations],
-  site: "https://rhythm-nation-blog.vercel.app",
+  integrations: integrations,
+
+  site: "https://main--gleaming-cuchufli-c99aa1.netlify.app/",
   output: "server",
   adapter: netlify(),
 });
