@@ -25,7 +25,10 @@ const integrations = [tailwind(), icon(), svelte(), sitemap()];
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: integrations,
+  integrations:
+    import.meta.env.IS_LOCAL_DEV === "true"
+      ? [...integrations, ...devOnlyIntegrations]
+      : integrations,
 
   site: "https://main--gleaming-cuchufli-c99aa1.netlify.app/",
   output: "server",
