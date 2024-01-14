@@ -9,31 +9,33 @@
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    alert("you submitted the contact form");
 
     const formData = Object.fromEntries(new FormData(e.currentTarget));
 
-    const data = contactFormSchema.safeParse(formData);
+    const validated = contactFormSchema.safeParse(formData);
 
-    // now before redirecting lets actually send this to the backend and make sure it passes there.
-    if (data.success) redirectTo("/thankyou");
+    if (validated.success) {
+      const siteUrl = window.location.origin;
+      const res = await fetch(`${siteUrl}/api/contact`, {
+        method: "POST",
+        body: JSON.stringify(formData.comment),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
 
-    if (!data.success) {
-      console.log(data.error.flatten());
-      errors = data.error.flatten().fieldErrors;
+      if (res.ok) redirectTo("/thankyou");
+    }
+
+    if (!validated.success) {
+      console.log(validated.error.flatten());
+      errors = validated.error.flatten().fieldErrors;
     }
   };
 </script>
 
-<form
-  novalidate
-  on:submit={handleSubmit}
-  class="grid gap-y-2"
->
-  <label
-    for="comment"
-    class="text-zinc-900 text-2xl mb-2 mt-10"
-  >
+<form novalidate on:submit={handleSubmit} class="grid gap-y-2">
+  <label for="comment" class="text-zinc-900 text-2xl mb-2 mt-10">
     What's on your mind?
   </label>
 
