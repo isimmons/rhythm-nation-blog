@@ -1,47 +1,22 @@
-# Astro Starter Kit: Minimal
+# notes on the newsletter signup
 
-```sh
-npm create astro@latest -- --template minimal
-```
+## also pertains to other forms (contact)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+combine handler function and this for PE
+https://dev.to/mfrachet/astro-progressively-enhanced-forms-442g
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Also, the message from xata is not a user friendly message.
+Be sure to properly log those messages for debug and customer tech support
+but leave a purty message for the UI
 
-## 🚀 Project Structure
+I believe the api should be kept simple and take input, process, return output.
+Let the UI redirecti it's self or handle responses however but the api only returns a response
+with json stringified object, success or failure and any error messages meant for the UI. Other errors
+should be logged appropriately in the api and never get sent to the UI.
+So I'll be rewritting all of this.
 
-Inside of your Astro project, you'll see the following folders and files:
+1. use PE
+2. use fetch
+3. handle response
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+build a single catchall page for failures in cases where redirect is needed. Not a separate one for newsletter failure, something else failure, another thing failure, etc.

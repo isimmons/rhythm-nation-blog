@@ -29,17 +29,21 @@ const tables = [
     columns: [
       { name: "post", type: "string", notNull: true, defaultValue: "" },
       { name: "text", type: "text", notNull: true, defaultValue: "" },
-      { name: "user", type: "link", link: { table: "users" } },
       { name: "date", type: "datetime", notNull: true, defaultValue: "now" },
+      { name: "user", type: "link", link: { table: "users" } },
     ],
   },
   {
     name: "reactions",
     columns: [
       { name: "emoji", type: "string", notNull: true, defaultValue: "star" },
-      { name: "post", type: "string", notNull: true, defaultValue: "null" },
+      { name: "post", type: "string", notNull: true, defaultValue: '"null"' },
       { name: "user", type: "link", link: { table: "users" } },
     ],
+  },
+  {
+    name: "subscribers",
+    columns: [{ name: "email", type: "email", unique: true }],
   },
 ] as const;
 
@@ -55,10 +59,14 @@ export type CommentsRecord = Comments & XataRecord;
 export type Reactions = InferredTypes["reactions"];
 export type ReactionsRecord = Reactions & XataRecord;
 
+export type Subscribers = InferredTypes["subscribers"];
+export type SubscribersRecord = Subscribers & XataRecord;
+
 export type DatabaseSchema = {
   users: UsersRecord;
   comments: CommentsRecord;
   reactions: ReactionsRecord;
+  subscribers: SubscribersRecord;
 };
 
 const DatabaseClient = buildClient();
